@@ -3,14 +3,15 @@
 names=("zero" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine")
 
 
-namer=("${!names[@]}")
+nameindeces=("${!names[@]}")
 
 echo "${namer[@]}"
 
-for i in "${namer[@]}"; do
+for i in "${nameindeces[@]}"; do
 	if [[ $i -eq 2 ]]; then
-		for j in "${namer[@]}"; do
-			echo  "${names[i]}${names[j]}"
+		for j in "${nameindeces[@]}"; do
+			$(sudo useradd "elec${names[i]}${names[j]}" -p  "elec${names[i]}${names[j]}password")
+			echo  "user elec${names[i]}${names[j]} created"
 			if [[ $j -eq 0 ]]; then
 				break;
 			fi
@@ -18,7 +19,8 @@ for i in "${namer[@]}"; do
 		break;
 	fi
 
-	for j in "${namer[@]}"; do
-		echo  "${names[i]}${names[j]}"
+	for j in "${nameindeces[@]}"; do
+		$(sudo useradd "elec${names[i]}${names[j]}" -p  "elec${names[i]}${names[j]}password")
+		echo  "user elec${names[i]}${names[j]} created"
 	done
 done

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+names=("zero" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine")
+
+
+namer=("${!names[@]}")
+
+for i in "${namer[@]}"; do
+	if [[ $i -eq 2 ]]; then
+		for j in "${namer[@]}"; do
+			$(sudo userdel "elec${names[i]}${names[j]}")
+			echo  "user elec${names[i]}${names[j]} deleted."
+			if [[ $j -eq 0 ]]; then
+				break;
+			fi
+		done
+		break;
+	fi
+
+	for j in "${namer[@]}"; do
+		$(sudo userdel "elec${names[i]}${names[j]}")
+		echo  "user elec${names[i]}${names[j]} deleted."
+	done
+done

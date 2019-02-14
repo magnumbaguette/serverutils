@@ -1,0 +1,2 @@
+- Add functionality for menu selection.
+- Refactor the code.
