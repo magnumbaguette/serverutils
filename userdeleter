@@ -2,23 +2,28 @@
 
 names=("zero" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine")
 
+arg1=$(($1/10))
+arg2=$(($1%10))
 
-namer=("${!names[@]}")
 
-for i in "${namer[@]}"; do
-	if [[ $i -eq 2 ]]; then
-		for j in "${namer[@]}"; do
+nameindeces=("${!names[@]}")
+
+for i in "${nameindeces[@]}"; do
+	if [[ $i -eq $arg1 ]]; then
+		for j in "${nameindeces[@]}"; do
 			$(sudo userdel "elec${names[i]}${names[j]}")
-			echo  "user elec${names[i]}${names[j]} deleted."
-			if [[ $j -eq 0 ]]; then
+			$(sudo rm -r /home/"elec${names[i]}${names[j]}")
+			echo  "user elec${names[i]}${names[j]} deleted." 
+			if [[ $j -eq $arg2 ]]; then
 				break;
 			fi
 		done
 		break;
 	fi
 
-	for j in "${namer[@]}"; do
+	for j in "${nameindeces[@]}"; do
 		$(sudo userdel "elec${names[i]}${names[j]}")
-		echo  "user elec${names[i]}${names[j]} deleted."
+		$(sudo rm -r /home/"elec${names[i]}${names[j]}")
+		echo  "user elec${names[i]}${names[j]} deleted." 
 	done
 done

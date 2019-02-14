@@ -2,17 +2,18 @@
 
 names=("zero" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine")
 
+arg1=$(($1/10))
+arg2=$(($1%10))
+
 
 nameindeces=("${!names[@]}")
 
-echo "${namer[@]}"
-
 for i in "${nameindeces[@]}"; do
-	if [[ $i -eq 2 ]]; then
+	if [[ $i -eq $arg1 ]]; then
 		for j in "${nameindeces[@]}"; do
-			$(sudo useradd "elec${names[i]}${names[j]}" -p  "elec${names[i]}${names[j]}password")
-			echo  "user elec${names[i]}${names[j]} created"
-			if [[ $j -eq 0 ]]; then
+			$(sudo useradd  -p$(openssl passwd -1 "elec${names[i]}${names[j]}password") -m "elec${names[i]}${names[j]}")
+			echo  "user elec${names[i]}${names[j]} created with password elec${names[i]}${names[j]}password "
+			if [[ $j -eq $arg2 ]]; then
 				break;
 			fi
 		done
@@ -20,7 +21,7 @@ for i in "${nameindeces[@]}"; do
 	fi
 
 	for j in "${nameindeces[@]}"; do
-		$(sudo useradd "elec${names[i]}${names[j]}" -p  "elec${names[i]}${names[j]}password")
-		echo  "user elec${names[i]}${names[j]} created"
+		$(sudo useradd  -p$(openssl passwd -1 "elec${names[i]}${names[j]}password")  "elec${names[i]}${names[j]}")
+		echo  "user elec${names[i]}${names[j]} created with password elec${names[i]}${names[j]}password "
 	done
 done
