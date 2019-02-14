@@ -1,0 +1,24 @@
+#!/bin/bash
+
+names=("zero" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine")
+
+
+namer=("${!names[@]}")
+
+echo "${namer[@]}"
+
+for i in "${namer[@]}"; do
+	if [[ $i -eq 2 ]]; then
+		for j in "${namer[@]}"; do
+			echo  "${names[i]}${names[j]}"
+			if [[ $j -eq 0 ]]; then
+				break;
+			fi
+		done
+		break;
+	fi
+
+	for j in "${namer[@]}"; do
+		echo  "${names[i]}${names[j]}"
+	done
+done
