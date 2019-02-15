@@ -1,4 +1,36 @@
 #!/bin/bash
 
-echo "first arg is: $(($1/10))"
-echo "second arg is: $(($1%10))"
+#First menu
+echo "Select year"
+echo "1) First account"
+echo "2) Second account"
+echo "3) Third account"
+echo "4) Quit"
+while true; do
+	read -r -n1 -p "> " onesel
+	echo
+	case $onesel in
+		1) year="First"; break;;
+		2) year="Second"; break;;
+		3) year="Third"; break;;
+		4) exit 0;;
+		*) echo "Unrecognized command";;
+	esac
+done
+
+#Second menu
+echo "Select course"
+echo "1) Electronics"
+echo "2) Physics"
+echo "3) Statistics"
+while true; do
+	read -r -n1 -p ">> " twosel
+	echo
+	case $twosel in 
+		1) course="Elec"; break;;
+		2) course="Phy"; break;;
+		3) course="Stats"; break;;
+		*) echo "Unrecognized command";;
+	esac
+done
+echo "${year}${course}"

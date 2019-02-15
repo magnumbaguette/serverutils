@@ -1,0 +1,60 @@
+#!/bin/bash
+names=("zero" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine")
+arg1=$(($1/10))
+arg2=$(($1%10))
+nameindeces=("${!names[@]}")
+
+
+#First menu
+echo "Select year"
+echo "1) First account"
+echo "2) Second account"
+echo "3) Third account"
+echo "4) Quit"
+while true; do
+	read -r -n1 -p "> " onesel
+	echo
+	case $onesel in
+		1) year="first"; break;;
+		2) year="second"; break;;
+		3) year="third"; break;;
+		4) exit 0;;
+		*) echo "Unrecognized command";;
+	esac
+done
+
+#Second menu
+echo "Select course"
+echo "1) Electronics"
+echo "2) Physics"
+echo "3) Statistics"
+while true; do
+	read -r -n1 -p ">> " twosel
+	echo
+	case $twosel in 
+		1) course="elec"; break;;
+		2) course="phy"; break;;
+		3) course="stats"; break;;
+		*) echo "Unrecognized command";;
+	esac
+done
+
+
+#Start adding accounts
+for i in "${nameindeces[@]}"; do
+	if [[ $i -eq $arg1 ]]; then
+		for j in "${nameindeces[@]}"; do
+			sudo useradd -p$(openssl passwd -1 ${year}${course}${names[i]}${names[j]}password) "${year}${course}${names[i]}${names[j]}"
+			echo  "user ${year}${course}${names[i]}${names[j]} created with passord  ${year}${course}${names[i]}${names[j]}password"
+			if [[ $j -eq $arg2 ]]; then
+				break;
+			fi
+		done
+		break;
+	fi
+
+	for j in "${nameindeces[@]}"; do
+		sudo useradd -p$(openssl passwd -1 ${year}${course}${names[i]}${names[j]}password) "${year}${course}${names[i]}${names[j]}"
+		echo  "user ${year}${course}${names[i]}${names[j]} created with passord  ${year}${course}${names[i]}${names[j]}password"
+	done
+done
